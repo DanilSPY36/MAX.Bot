@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <PackageId>Max.Bot</PackageId>
+	  <Version>0.1.1</Version>
+	  <Authors>DanilNazarko</Authors>
+	  <Description>SDK для работы с MAX Bot API</Description>
+	  <PackageTags>Max bot api sdk</PackageTags>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.3.9" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.2" />
+	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	  <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="ModelsDiagrams\" />
+  </ItemGroup>
+
+</Project>
