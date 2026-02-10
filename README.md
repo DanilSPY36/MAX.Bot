@@ -9,7 +9,9 @@ Check 👉 [setting up the bot](https://dev.max.ru/docs/chatbots/bots-coding/pre
 Check 👉 [Bots: An introduction for developers](https://dev.max.ru/docs/chatbots/bots-create) 👈 to understand what a Telegram bot is and what it can do.
 
 ## 🚧 Supported Platforms 🚧
-.NET 10
+- .NET 8
+- .NET 9
+- .NET 10
 
 ## ⭐ Quick start ⭐
 
