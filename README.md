@@ -74,7 +74,7 @@ Forwarding       https://61a6-77-73-123-123.ngrok-free.app -> http://localhost:1
 {
   "BotConfiguration": {
     "Token": "YOUR_MAX_BOT_TOKEN",
-    "BaseUrl": "https://61a6-77-73-232-178.ngrok-free.app/(Your endpoint name 'Bot')"
+    "BaseUrl": "https://61a6-77-73-123-123.ngrok-free.app/(Your endpoint name 'Bot')"
   }
 }
 ``` 
