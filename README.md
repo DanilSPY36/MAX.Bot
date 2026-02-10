@@ -9,9 +9,7 @@ Check 👉 [setting up the bot](https://dev.max.ru/docs/chatbots/bots-coding/pre
 Check 👉 [Bots: An introduction for developers](https://dev.max.ru/docs/chatbots/bots-create) 👈 to understand what a Telegram bot is and what it can do.
 
 ## 🚧 Supported Platforms 🚧
-- .NET 8
-- .NET 9
-- .NET 10
+.NET 10
 
 ## ⭐ Quick start ⭐
 
@@ -32,7 +30,7 @@ With Webhook, your web application gets notified one by one, automatically by [M
 Here are example codes for handling updates, depending on the types of ASP.NET projects:
 
 **ASP.NET Core with Controllers (MVC)**
-## 🧩 Быстрый старт (Dependency Injection)
+## 🧩 Quickstart (Dependency Injection)
 
 
 
@@ -74,7 +72,7 @@ Forwarding       https://61a6-77-73-123-123.ngrok-free.app -> http://localhost:1
 {
   "BotConfiguration": {
     "Token": "YOUR_MAX_BOT_TOKEN",
-    "BaseUrl": "https://61a6-77-73-123-123.ngrok-free.app/(Your endpoint name 'Bot')"
+    "BaseUrl": "https://61a6-77-73-232-178.ngrok-free.app/(Your endpoint name 'Bot')"
   }
 }
 ``` 
@@ -91,7 +89,7 @@ builder.Services.AddMaxBot(builder.Configuration);
 
 var app = builder.Build();
 ```
-### Step 6: Using Max.Bot in Your Own Services
+### 🚀 Step 6: Using Max.Bot in Your Own Services
 Max.Bot is designed to be easily integrated into your own application services.
 
 You can implement custom update processing logic by creating your own
@@ -129,7 +127,7 @@ public class UpdateHandler : IUpdateHandler
 **Register Custom Handler**
 `builder.Services.AddScoped<IUpdateHandler, UpdateHandler>();`
 
-### Step 7: Handling Updates (Controller Example)
+### 🚀 Step 7: Handling Updates (Controller Example)
 
 **(Controller Example)**
 ```C#
