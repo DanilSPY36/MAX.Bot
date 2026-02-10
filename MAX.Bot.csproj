@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <PackageId>Max.Bot</PackageId>
+	  <PackageId>Max.Bot.SDK</PackageId>
 	  <Version>0.1.1</Version>
 	  <Authors>DanilNazarko</Authors>
 	  <Description>SDK для работы с MAX Bot API</Description>
