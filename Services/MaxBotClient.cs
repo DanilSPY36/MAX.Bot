@@ -546,7 +546,15 @@ namespace MAX.Bot.Services
             
             for(int attempt = 1; attempt<= maxRetries; attempt++)
             {
-                var response = await httpClient.PostAsync($"messages?user_id={chatId}", content, ct);
+                //var response = await httpClient.PostAsync($"messages?user_id={chatId}", content, ct);
+                HttpResponseMessage response;
+                if (chatId > 0)
+                    response = await httpClient.PostAsync($"messages?user_id={chatId}", content, ct);
+                else
+                {
+                    response = await httpClient.PostAsync($"messages?chat_id={chatId}", content, ct);
+
+                }
                 var jsonString = await response.Content.ReadAsStringAsync(ct);
 
                 if (response.IsSuccessStatusCode)
