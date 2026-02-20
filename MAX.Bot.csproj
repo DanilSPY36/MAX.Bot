@@ -5,12 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <PackageId>Max.Bot.SDK</PackageId>
-	  <Version>0.1.2</Version>
+	  <Version>0.1.3</Version>
 	  <Authors>DanilNazarko</Authors>
 	  <Description>SDK для работы с MAX Bot API</Description>
 	  <PackageTags>Max bot api sdk</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
 
