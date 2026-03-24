@@ -15,6 +15,11 @@ namespace MAX.Bot.Configuration
         /// Базовый URL вебхука бота MAX.
         /// </summary>
         public string WebhookUrl { get; init; } = string.Empty;
+        /// <summary>
+        /// Токен для установки конфигурации бота
+        /// опциональное поле
+        /// </summary>
+        public string? SecretToken { get; init; }
 
         /// <summary>
         /// Таймаут HTTP запросов (в секундах)
