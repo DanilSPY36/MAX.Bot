@@ -38,6 +38,9 @@ namespace MAX.Bot.Models
                     ChatType.chat => Recipient?.ChatId
                         ?? throw new InvalidOperationException("ChatId is null for chat"),
 
+                    ChatType.channel => Recipient?.ChatId
+                        ?? throw new InvalidOperationException("ChatId is null for chanal"),
+
                     _ => throw new NotSupportedException($"Unknown chat type: {Recipient.ChatType}")
                 };
             }

@@ -16,6 +16,8 @@ namespace MAX.Bot.Services
         Task<Chat> GetChat(Int64 chatId);
         Task<Message> SendMessage(long chatId, string text, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default);
         Task<Message> SendFile(long chatId, UploadedFile file, string? caption, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default);
+        Task<IEnumerable<Message>> SendFiles(long chatId, IEnumerable<UploadedFile> files, string? caption, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default);
+
         Task<Message> GetMessage(string messageId, long? chatId = null, CancellationToken cancellationToken = default);
         //Task<IEnumerable<Message>> GetMessagesByChat(long? chatId, DateTimeOffset? from = null, DateTimeOffset? to = null,  int count = 50, CancellationToken cancellationToken = default);
         //Task<IEnumerable<Message>> GetMessagesByIds(IReadOnlyCollection<string> messageIds, CancellationToken cancellationToken = default);

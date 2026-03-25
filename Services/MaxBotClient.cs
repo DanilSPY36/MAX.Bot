@@ -121,6 +121,27 @@ namespace MAX.Bot.Services
             var message = await SendMessageWithAttachmentAsync(uploadType, chatId, uploadResult, caption, parseMode, replyMarkup, cancellationToken);
             return message;
         }
+        public async Task<IEnumerable<Message>> SendFiles(long chatId, IEnumerable<UploadedFile> files, string? caption, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default)
+        {
+            var results = new List<Message>();
+            bool first = true;
+
+            foreach (var file in files)
+            {
+                var message = await SendFile(
+                    chatId,
+                    file,
+                    first ? caption : null,           //  текст только к первому сообщению
+                    first ? replyMarkup : null,       //  кнопки только к первому сообщению
+                    parseMode,
+                    cancellationToken);
+
+                results.Add(message);
+                first = false;
+            }
+
+            return results;
+        }
         public async Task<Message> GetMessage(string messageId, long? chatId = null, CancellationToken ct = default)
         {
             var response = await httpClient.GetAsync($"messages/{messageId}", ct);
@@ -222,7 +243,9 @@ namespace MAX.Bot.Services
         }
         public async Task<bool> DeleteMessage(string messageId, long? chatId = null, CancellationToken cancellationToken = default)
         {
-            var response = await httpClient.DeleteAsync($"messages?message_id={messageId}", cancellationToken);
+            string url = chatId.HasValue ? $"messages?message_id={messageId}&chat_id={chatId}" : $"messages?message_id={messageId}";
+
+            var response = await httpClient.DeleteAsync(url, cancellationToken);
             var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
             MaxBooleanResponse? result = null;
             if (response.IsSuccessStatusCode)

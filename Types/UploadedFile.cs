@@ -11,12 +11,12 @@ namespace MAX.Bot.Types
         {
             this.stream = stream;
             FileName = fileName;
-            Lenght = stream.Length;
+            Length = stream.Length;
         }
 
         internal Stream stream { get; }
         public string FileName { get; }
-        public Int64 Lenght { get; }
+        public Int64 Length { get; }
 
         [JsonPropertyName("file_id")]
         public string FileId { get; init; } = default!;
