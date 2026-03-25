@@ -118,7 +118,7 @@ namespace MAX.Bot.Services
             var uploadType = UploadTypeResolver.Resolve(file);
             var upladUrl = await GetUploadUrlAsync(uploadType, cancellationToken);
             var uploadResult = await UploadMultipartAsync(uploadType, upladUrl, file, cancellationToken);
-            var message = await SendMessageWithAttachmentAsync(uploadType, chatId, uploadResult, caption, parseMode, cancellationToken);
+            var message = await SendMessageWithAttachmentAsync(uploadType, chatId, uploadResult, caption, parseMode, replyMarkup, cancellationToken);
             return message;
         }
         public async Task<Message> GetMessage(string messageId, long? chatId = null, CancellationToken ct = default)
@@ -460,7 +460,8 @@ namespace MAX.Bot.Services
 
             return result ?? throw new InvalidOperationException("Upload failed");
         }
-        private async Task<Message> SendMessageWithAttachmentAsync(UploadType uploadType, Int64 chatId, UploadResult uploadResult, string? caption, ParseMode parseMode = ParseMode.none, CancellationToken ct = default)
+        private async Task<Message> SendMessageWithAttachmentAsync(UploadType uploadType, Int64 chatId,
+            UploadResult uploadResult, string? caption, ParseMode parseMode = ParseMode.none, MaxInlineKeyboard? replyMarkup = null, CancellationToken ct = default)
         {
             int maxRetries = 5;
             int delayMs = 500;
@@ -484,12 +485,8 @@ namespace MAX.Bot.Services
                     {
                         var firstPhotoEntry = uploadResult.Media!.Values.First();
 
-                        messagePayload = new
+                        var attachmentsList = new List<object>
                         {
-                            text = caption ?? string.Empty,
-                            //format = parseMode.ToString(),
-                            attachments = new[]
-                            {
                             new
                             {
                                 type = "image",
@@ -499,7 +496,17 @@ namespace MAX.Bot.Services
                                     url = firstPhotoEntry.ToString()
                                 }
                             }
+                        };
+
+                        if (replyMarkup is not null && replyMarkup.Payload.Buttons.Any())
+                        {
+                            attachmentsList.Add(replyMarkup);
                         }
+
+                        messagePayload = new
+                        {
+                            text = caption ?? string.Empty,
+                            attachments = attachmentsList
                         };
                         break;
                     }
@@ -509,25 +516,30 @@ namespace MAX.Bot.Services
                 case "document":
                     {
 
-                        messagePayload = new
+                        var attachmentsList = new List<object>
                         {
-                            text = caption ?? string.Empty,
-                            //format = parseMode.ToString(),
-                            attachments = new[]
+                            new
                             {
-                                new
+                                type = "file",
+                                payload = new
                                 {
-                                    type = "file",
-                                    payload = new
-                                    {
-                                        token = token,
-                                        filename = "uploadResult.Media",
-                                        size = "file.Length"
-                                    }
+                                    token = token,
+                                    filename = "uploadResult.Media",
+                                    size = "file.Length"
                                 }
                             }
                         };
-                        //await Task.Delay(700, ct);
+
+                        if (replyMarkup is not null && replyMarkup.Payload.Buttons.Any())
+                        {
+                            attachmentsList.Add(replyMarkup);
+                        }
+
+                        messagePayload = new
+                        {
+                            text = caption ?? string.Empty,
+                            attachments = attachmentsList
+                        };
                         break;
                     }
 
@@ -543,8 +555,8 @@ namespace MAX.Bot.Services
             });
 
             using var content = new StringContent(json, Encoding.UTF8, "application/json");
-            
-            for(int attempt = 1; attempt<= maxRetries; attempt++)
+
+            for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
                 //var response = await httpClient.PostAsync($"messages?user_id={chatId}", content, ct);
                 HttpResponseMessage response;
@@ -555,6 +567,7 @@ namespace MAX.Bot.Services
                     response = await httpClient.PostAsync($"messages?chat_id={chatId}", content, ct);
 
                 }
+
                 var jsonString = await response.Content.ReadAsStringAsync(ct);
 
                 if (response.IsSuccessStatusCode)
