@@ -164,11 +164,29 @@ namespace MAX.Bot.Services
         }
         public async Task<bool> EditMessageText(string messageId, string text, long? chatId = null, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default)
         {
+            object? attachments;
+
+            if (replyMarkup == null)
+            {
+                // ЯВНО удалить кнопки
+                attachments = Array.Empty<object>();
+            }
+            else if (replyMarkup.Payload.Buttons.Any())
+            {
+                // Заменить кнопки
+                attachments = new object[] { replyMarkup };
+            }
+            else
+            {
+                // Передали пустую клавиатуру → удалить
+                attachments = Array.Empty<object>();
+            }
+
             var payload = new
             {
                 text = text,
                 format = parseMode != ParseMode.none ? parseMode.ToString() : null,
-                attachments = replyMarkup is not null && replyMarkup.Payload.Buttons.Count() != 0 ? new object[] { replyMarkup } : null
+                attachments = attachments
             };
             var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
             {
