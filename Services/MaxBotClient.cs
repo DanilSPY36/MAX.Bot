@@ -31,6 +31,14 @@ namespace MAX.Bot.Services
             this.httpClient = httpClient;
             
         }
+        public MaxBotClient(string token)
+        {
+            this.httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://platform-api.max.ru/")
+            };
+            this.httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+        }
 
         #region Message
         public async Task<Message> SendMessage(long chatId, string text, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default)
