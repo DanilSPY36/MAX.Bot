@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MAX.Bot.Services
 {
-    public static class MaxBot
+    public static class Bot
     {
         public static IMaxBotClient Create(string token)
             => new MaxBotClient(token);
