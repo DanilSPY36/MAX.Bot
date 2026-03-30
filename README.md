@@ -2,7 +2,13 @@
 
 The Bot API is an HTTP-based interface created for developers keen on building bots for [MAX](https://max.ru/).
 
-🚀 Need help, custom integration or enterprise support?  
+🚀 Need help integrating MAX bots or building production-ready solutions?
+
+I can help you with:
+⚡ Custom bot development
+⚡ Webhook setup & scaling
+⚡ Architecture & performance optimization
+
 📩 Contact: nazarko.danny@gmail.com 
 💬 Telegram: https://t.me/DanilSPY
 💬 Max: [Назарько Данил](https://max.ru/u/f9LHodD0cOIB_3DipIp0kR2RmfGmFYGCYgj11BHQg7iwZ9IxVkz-bKMSCxs)
