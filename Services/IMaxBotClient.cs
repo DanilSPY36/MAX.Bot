@@ -1,4 +1,5 @@
-﻿using MAX.Bot.Models;
+﻿using MAX.Bot.Extensions;
+using MAX.Bot.Models;
 using MAX.Bot.Models.Enums;
 using MAX.Bot.Types;
 using MAX.Bot.Types.Keyboards;
@@ -22,6 +23,8 @@ namespace MAX.Bot.Services
         //Task<IEnumerable<Message>> GetMessagesByChat(long? chatId, DateTimeOffset? from = null, DateTimeOffset? to = null,  int count = 50, CancellationToken cancellationToken = default);
         //Task<IEnumerable<Message>> GetMessagesByIds(IReadOnlyCollection<string> messageIds, CancellationToken cancellationToken = default);
         Task<bool> EditMessageText(string messageId, string text, long? chatId = null, MaxInlineKeyboard? replyMarkup = null, ParseMode parseMode = ParseMode.none, CancellationToken cancellationToken = default);
+        Task<bool> EditMessageText(string messageId, EditMessageOptions options, CancellationToken cancellationToken = default);
+
         Task<bool> DeleteMessage(string messageId, long? chatId = null, CancellationToken cancellationToken = default);
         Task SetWebhook(string url, string? secretToken = null,IEnumerable<string>? updateTypes = null, CancellationToken cancellationToken = default);
         Task DeleteWebhook(string webHook, CancellationToken ct = default);

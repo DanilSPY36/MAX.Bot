@@ -1,4 +1,5 @@
 ﻿using MAX.Bot.Exceptions;
+using MAX.Bot.Extensions;
 using MAX.Bot.Models;
 using MAX.Bot.Models.Attachments;
 using MAX.Bot.Models.Enums;
@@ -266,6 +267,107 @@ namespace MAX.Bot.Services
                     statusCode: response.StatusCode,
                     errorCode: errorCode);
             }
+        }
+        public async Task<bool> EditMessageText(string messageId, EditMessageOptions options, CancellationToken cancellationToken = default)
+        {
+            var payload = new Dictionary<string, object?>();
+
+            if (options.Text != null)
+                payload["text"] = options.Text;
+
+            if (options.ParseMode.HasValue)
+                payload["format"] = options.ParseMode.Value.ToString();
+
+            // --- Attachments ---
+            if (options.Attachments != null)
+            {
+                payload["attachments"] = options.Attachments.Any()
+                    ? options.Attachments
+                    : Array.Empty<object>();
+            }
+
+            // --- ReplyMarkup ---
+            if (options.ReplyMarkup != null)
+            {
+                payload["attachments"] ??= new List<object>();
+
+                if (options.ReplyMarkup.Payload.Buttons.Any())
+                {
+                    ((List<object>)payload["attachments"]!).Add(options.ReplyMarkup);
+                }
+                else
+                {
+                    payload["attachments"] = Array.Empty<object>();
+                }
+            }
+
+            HttpResponseMessage response;
+
+            try
+            {
+                response = await httpClient.PutAsJsonAsync(
+                    $"messages?message_id={messageId}",
+                    payload,
+                    cancellationToken);
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new MaxRequestException("Network error", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                throw new MaxRequestException("Request timeout", ex);
+            }
+
+            var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
+
+            if (response.IsSuccessStatusCode)
+            {
+                try
+                {
+                    var result = JsonSerializer.Deserialize<MaxBooleanResponse>(
+                        responseBody,
+                        new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                    ) ?? throw new MaxRequestException("Empty response from MAX");
+
+                    return result.Success;
+                }
+                catch (JsonException ex)
+                {
+                    throw new MaxRequestException("Invalid response format from MAX", ex);
+                }
+            }
+
+            MaxErrorResponse? errorResponse;
+
+            try
+            {
+                errorResponse = JsonSerializer.Deserialize<MaxErrorResponse>(
+                    responseBody,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            }
+            catch
+            {
+                errorResponse = new MaxErrorResponse
+                {
+                    Code = "SDK_ERROR",
+                    Message = "Необработанная ошибка"
+                };
+            }
+
+            var errorCode = response.StatusCode switch
+            {
+                HttpStatusCode.BadRequest => MaxErrorCode.InvalidRequest,
+                HttpStatusCode.NotFound => MaxErrorCode.ChatNotFound,
+                HttpStatusCode.Forbidden => MaxErrorCode.BotBlocked,
+                HttpStatusCode.TooManyRequests => MaxErrorCode.RateLimited,
+                _ => MaxErrorCode.Unknown
+            };
+
+            throw new MaxRequestException(
+                message: $"Failed to edit message {messageId}: {errorResponse?.Message ?? responseBody}",
+                statusCode: response.StatusCode,
+                errorCode: errorCode);
         }
         public async Task<bool> DeleteMessage(string messageId, long? chatId = null, CancellationToken cancellationToken = default)
         {
