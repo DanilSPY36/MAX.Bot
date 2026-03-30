@@ -5,13 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <PackageId>Max.Bot.SDK</PackageId>
-	  <Version>0.2.0</Version>
+	  <Version>0.2.1</Version>
 	  <Authors>DanilNazarko</Authors>
 	  <Description>SDK для работы с MAX Bot API</Description>
 	  <PackageTags>Max bot api sdk</PackageTags>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
 
@@ -24,6 +25,7 @@
 	  <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	  <None Include="README.md" Pack="true" PackagePath="\" />
+	  <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 

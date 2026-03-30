@@ -2,6 +2,12 @@
 
 The Bot API is an HTTP-based interface created for developers keen on building bots for [MAX](https://max.ru/).
 
+🚀 Need help, custom integration or enterprise support?  
+📩 Contact: nazarko.danny@gmail.com 
+💬 Telegram: https://t.me/DanilSPY
+💬 Max: [Назарько Данил](https://max.ru/u/f9LHodD0cOIB_3DipIp0kR2RmfGmFYGCYgj11BHQg7iwZ9IxVkz-bKMSCxs)
+
+
 Check 👉[How to create bot](https://dev.max.ru/docs/chatbots/bots-create)👈
 
 Check 👉 [setting up the bot](https://dev.max.ru/docs/chatbots/bots-coding/prepare) 👈
@@ -9,7 +15,7 @@ Check 👉 [setting up the bot](https://dev.max.ru/docs/chatbots/bots-coding/pre
 Check 👉 [Bots: An introduction for developers](https://dev.max.ru/docs/chatbots/bots-create) 👈 to understand what a Telegram bot is and what it can do.
 
 ## 🚧 Supported Platforms 🚧
-.NET 10
+.NET 8  .NET 9  .NET 10
 
 ## ⭐ Quick start ⭐
 
