@@ -9,6 +9,7 @@ namespace MAX.Bot.Models.Enums
         request_geo_location,
         request_contact,
         open_app,
-        message
+        message,
+        clipboard
     }
 }

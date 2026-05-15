@@ -1,4 +1,5 @@
-﻿using MAX.Bot.Models.Buttons;
+﻿using MAX.Bot.Models;
+using MAX.Bot.Models.Buttons;
 using MAX.Bot.Models.Enums;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace MAX.Bot.JsonConverters
             Type? result = ButtonType switch
             {
                 MaxButtonType.callback => typeof(MaxCallbackButton),
+                MaxButtonType.clipboard => typeof(MaxClipboardButton),
                 MaxButtonType.link => typeof(MaxLinkButton),
                 MaxButtonType.request_geo_location => typeof(MaxRequestGeoLocationButton),
                 MaxButtonType.request_contact => typeof(MaxRequestContactButton),
@@ -30,7 +32,7 @@ namespace MAX.Bot.JsonConverters
                 MaxButtonType.message => typeof(MaxMessageButton),
                 _ => throw new NotSupportedException($"Button type {ButtonType} is not supported")
             };
-               
+
             var obj = JsonSerializer.Deserialize(root.GetRawText(), result, options);
 
             return obj as MaxButtonBase ?? throw new JsonException($"Failed to deserialize update of type '{result}'.");
@@ -52,6 +54,9 @@ namespace MAX.Bot.JsonConverters
             {
                 case MaxLinkButton link:
                     writer.WriteString("url", link.Url);
+                    break;
+                case MaxClipboardButton clipboard:
+                    writer.WriteString("payload", clipboard.Payload);
                     break;
 
                 case MaxCallbackButton callback:
